@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
@@ -10,6 +10,15 @@ function PigComponent({user, tweets,setTweets} ) {
   const [show, setShow] = useState(false);
   const [tweetContent, setTweetContent] = useState("");
 
+  useEffect(() => {
+        
+    return() => tweetService.getTweets().then(tweets => {
+        setTweets(tweets)
+    })
+
+
+}, [])
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -18,22 +27,35 @@ function PigComponent({user, tweets,setTweets} ) {
     setTweetContent(e.target.value);
   };
 
-  const tweetear = (e) => {
+  const newDate = () => {
+    return new Date().toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  }
+
+  const tweetear = async (e) => {
     e.preventDefault();
+    handleClose();
     const newTweet = {
       username: user.username, 
       name: user.name || user.username,
       content: tweetContent,
       image: user.image,
+      date: newDate(),
       userId: user.id
     }
-    tweetService.postTweet(newTweet)
-    setTweets(tweets.concat(newTweet))
+    const newTweets = tweets.concat(newTweet)
+    //setTweets(newTweets)
+    await tweetService.postTweet(newTweet)
+    
     // user.tweets = user.tweets.concat(newTweet)
     // window.localStorage.clear()
     // window.localStorage.setItem('loggedUser', JSON.stringify(user))
     setTweetContent('')
-    handleClose();
   };
 
   return (
@@ -65,11 +87,9 @@ function PigComponent({user, tweets,setTweets} ) {
               controlId="exampleForm.ControlTextarea1"
             >
               <Form.Label>¡Pigttea aquí!</Form.Label>
-              <Form.Control as="textarea" rows={3} onChange={handleTextChange} value={tweetContent} />
+              <Form.Control as="textarea" autoFocus rows={3} onChange={handleTextChange} value={tweetContent} />
             </Form.Group>
-            <Button className="rounded-5" variant="primary" type="submit">
-              Pigttear
-            </Button>
+        <Modal.Footer className="border-0">
             <Button
               className="rounded-5"
               variant="secondary"
@@ -77,13 +97,13 @@ function PigComponent({user, tweets,setTweets} ) {
             >
               No Pigttear
             </Button>
+            <Button className="rounded-5" variant="primary" type="submit">
+              Pigttear
+            </Button>
+        </Modal.Footer>
+            
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          {/* <Button className="rounded-5" variant="primary" type="submit">
-            Pigttear
-          </Button> */}
-        </Modal.Footer>
       </Modal>
     </>
   );

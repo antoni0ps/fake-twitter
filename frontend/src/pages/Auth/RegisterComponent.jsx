@@ -41,11 +41,9 @@ const RegisterComponent = () => {
 
   const register = async (e) => {
     e.preventDefault();
-    console.log({ username,name, password });
 
     if (checkPassword()){
       const usuario = await registerService.register({ username, name, password });
-      console.log(usuario);
       handleClose();
     } else {
       alert('¡Las contraseñas deben coincidir!')
@@ -72,22 +70,22 @@ const RegisterComponent = () => {
         <Modal.Body>
           <Form onSubmit={register}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Usuario</Form.Label>
+              <Form.Label>Nombre y apellidos</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ej. pigtter. Lo usarás para loguearte"
+                placeholder="Ej. Juan Pérez"
                 autoFocus
-                onChange={handleChangeUser}
+                onChange={handleChangeName}
                 required
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Nick</Form.Label>
+              <Form.Label>Username</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ej. Ninja Pig. Así te verán los usuarios de la comunidad"
+                placeholder="Ej. Ninja Pig. Este será tu usuario para logearte"
                 autoFocus
-                onChange={handleChangeName}
+                onChange={handleChangeUser}
                 required
               />
             </Form.Group>

@@ -27,14 +27,28 @@ const postTweet = async tweetInfo => {
 }
 
 const updateTweet = async (id, newTweet) => {
-    const response = await axios.put(`${url}/${id}`, {content: newTweet})
+  if (newTweet.hasOwnProperty('content')) {
+    const response = await axios.put(`${url}/${id}`, { content: newTweet })
     return response.data
+
+  } else {
+    const response = await axios.put(`${url}/${id}`, { likes: newTweet.likes })
+    return response.data
+  }
+}
+
+const addComment = async (id, newComment) => {
+  const response = await axios.put(`${url}/${id}`, newComment)
+  return response.data
 }
 
 const removeTweet = async id => {
-    // const config = {headers: {Authorization: token}}
-    const response = await axios.delete(`${url}/${id}`)
+    try {
+      const response = await axios.delete(`${url}/${id}`)
     return response
+    } catch {
+      alert("El tweet no existe");
+    }
 }
 
-export default {getTweets, getSingleTweet, postTweet, updateTweet, removeTweet}
+export default {getTweets, getSingleTweet, postTweet, updateTweet, addComment, removeTweet}
