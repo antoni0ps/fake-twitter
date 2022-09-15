@@ -62,13 +62,4 @@ const addFollow = async (id, followId) => {
   }
 }
 
-const removeFollow = async (id, unfollowId) => {
-  try {
-    const response = await axios.put(`${url}/${id}`, {unfollowId: unfollowId})
-    return response.data
-  } catch {
-    alert("Error. Comprueba los datos");
-  }
-}
-
-export default {register, editarNombre, editarImagen, getUser, getUsers, addLike, addFollow, removeFollow}
+export default {register, editarNombre, editarImagen, getUser, getUsers, addLike, addFollow}

@@ -1,5 +1,5 @@
 import "./PigComponent.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -31,16 +31,6 @@ const PigComponent = ({
   userId
 }) => {
   let activeUser = JSON.parse(window.localStorage.getItem("loggedUser"));
-
-  const [following, setFollowing] = useState([])
-
-  useEffect(() => {
-
-    userService.getUser(activeUser.id).then(user => {
-      setFollowing(user.following)
-    })
-  }, [])
-
 
   const [show, setShow] = useState(false);
   const [tweetContent, setTweetContent] = useState("");
@@ -77,36 +67,10 @@ const PigComponent = ({
     handleClose();
   };
 
-  const condition = async () => {
-
-    const currentUser = await userService.getUser(activeUser.id)
-    console.log(currentUser)
-    if(currentUser){
-      return currentUser.following.some(x => x.id !== userId.id)
-    }
-  }
-
   const handleFollow = async (e) => {
     e.preventDefault();
-    console.log('follow', userId.id)
-    if (condition()) {
-      await userService.addFollow(activeUser.id, userId.id)
-      setFollowing(following.concat(userId.id))
-    }   
+    await userService.addFollow(activeUser.id, userId.id)
   };
-
-  const handleUnfollow = async (e) => {
-    e.preventDefault();
-    console.log('unfollow', userId.id)
-    if (condition()) {
-      await userService.removeFollow(activeUser.id, userId.id)
-      setFollowing(following.filter(x => x!==userId.id))
-    }   
-  };
-
-  const followCondition = () => {
-    return following.length === 0 || !following.includes(userId.id) ? <button onClick={handleFollow}>Follow</button> : <button onClick={handleUnfollow}>Unfollow</button>
-  }
 
   const setId = () => {
     userCall();
@@ -216,7 +180,11 @@ const PigComponent = ({
               <h6>
                 @{username}
                 <div className="btnFollow">
-                  {activeUser.username !== username && followCondition()}
+                  {activeUser.username !== username ? (
+                    <button onClick={handleFollow}>Follow</button>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </h6>
               <p className="card-text">{content}</p>
