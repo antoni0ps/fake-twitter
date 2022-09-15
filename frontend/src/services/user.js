@@ -46,6 +46,8 @@ const editarImagen = async (id, imageToUpdate) => {
 
 const addLike = async (id, tweetToAdd) => {
   try {
+    console.log(id)
+    console.log(typeof tweetToAdd)
     const response = await axios.put(`${url}/${id}`, {tweetId: tweetToAdd})
     return response.data
   } catch {
@@ -53,13 +55,4 @@ const addLike = async (id, tweetToAdd) => {
   }
 }
 
-const addFollow = async (id, followId) => {
-  try {
-    const response = await axios.put(`${url}/${id}`, {followId: followId})
-    return response.data
-  } catch {
-    alert("Error. Comprueba los datos");
-  }
-}
-
-export default {register, editarNombre, editarImagen, getUser, getUsers, addLike, addFollow}
+export default {register, editarNombre, editarImagen, getUser, getUsers, addLike}
