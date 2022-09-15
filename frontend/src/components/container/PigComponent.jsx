@@ -28,7 +28,6 @@ const PigComponent = ({
   setStrangeId,
   date,
   likes,
-  userId
 }) => {
   let activeUser = JSON.parse(window.localStorage.getItem("loggedUser"));
 
@@ -38,7 +37,10 @@ const PigComponent = ({
   const visible = { display: showComment ? "" : "none" };
 
   const [commentContent, setCommentContent] = useState("");
+<<<<<<< HEAD
   const [userLikes, setUserLikes] = useState([])
+=======
+>>>>>>> parent of 65afc71 (los usuarios solo pueden dar like a tweets que no son suyos y solo una vez)
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -135,6 +137,7 @@ const PigComponent = ({
   };
 
   const handleLike = (id) => async () => {
+<<<<<<< HEAD
     const check = userLikes.includes(user.id)
     if (!check) {
       const likesSaved = {
@@ -144,6 +147,13 @@ const PigComponent = ({
       await userService.addLike(user.id, id)
       setUserLikes(userLikes.concat(user.id))
     }
+=======
+    console.log("like", id);
+    const likesSaved = {
+      likes: likes + 1,
+    };
+    await tweetsService.updateTweet(id, likesSaved);
+>>>>>>> parent of 65afc71 (los usuarios solo pueden dar like a tweets que no son suyos y solo una vez)
   };
 
   const giveLike = () => {
@@ -189,7 +199,7 @@ const PigComponent = ({
               </h6>
               <p className="card-text">{content}</p>
               {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
-              <div>{giveLike()} {likes} piggylikes</div>
+              <div>{giveLike()}</div>
               <div className="fecha">{date || "01/01/1970"}</div>
             </div>
             {/* <button onClick={handleVisible} style={{ 'border': 'none', 'background': 'none' }}>V</button> */}
