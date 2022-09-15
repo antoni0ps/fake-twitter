@@ -27,6 +27,8 @@ loginRouter.post('/', async(request, response) => {
             name: user.name, 
             image:user.image, 
             tweets:user.tweets, 
+            followers: user.followers,
+            following: user.following,
             id: user._id})
 })
 
