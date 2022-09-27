@@ -2,7 +2,6 @@
 <h4> Héroes y Heroínas - Hiberus </h4>
 
 Aquí pueder ver el proyecto: https://pigtter.herokuapp.com/
-
 <br/>
 
 ## Descripción 
