@@ -1,8 +1,6 @@
 # Pigtter
 <h4> Héroes y Heroínas - Hiberus </h4>
 
-## Url para ver el resultado
-<br/>
 Aquí pueder ver el proyecto: https://pigtter.herokuapp.com/
 
 <br/>
